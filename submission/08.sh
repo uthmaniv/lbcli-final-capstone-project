@@ -1,2 +1,9 @@
-# what block height was this tx mined ?
-# 49990a9c8e60c8cba979ece134124695ffb270a98ba39c9824e42c4dc227c7eb
+# Find the block height where the transaction was mined.
+block_hash=$(
+  bitcoin-cli -signet getrawtransaction \
+    49990a9c8e60c8cba979ece134124695ffb270a98ba39c9824e42c4dc227c7eb \
+    true |
+    jq -r '.blockhash'
+)
+
+bitcoin-cli -signet getblockheader "$block_hash" | jq -r '.height'
